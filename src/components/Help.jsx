@@ -1,5 +1,4 @@
-﻿// src/components/Help.jsx
-import { useTranslation } from "../hooks/useTranslation";
+﻿import { useTranslation } from "../hooks/useTranslation";
 
 export default function Help() {
     const { t } = useTranslation();

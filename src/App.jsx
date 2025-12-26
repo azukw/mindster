@@ -1,4 +1,3 @@
-// src/App.jsx
 import { GameProvider } from "./context/GameContext";
 import Game from "./pages/Game";
 import "./App.css";

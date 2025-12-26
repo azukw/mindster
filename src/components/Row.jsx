@@ -1,5 +1,4 @@
-﻿// src/components/Row.jsx
-import { useGame } from "../context/GameContext";
+﻿import { useGame } from "../context/GameContext";
 import { THEMES } from "./Shop";
 
 export default function Row({ colors = [], feedback, slots, inactive, isCurrent }) {

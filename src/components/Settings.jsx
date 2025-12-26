@@ -1,5 +1,4 @@
-﻿// src/components/Settings.jsx
-import { useGame } from "../context/GameContext";
+﻿import { useGame } from "../context/GameContext";
 import { useTranslation } from "../hooks/useTranslation";
 
 const LANGUAGES = [

@@ -1,5 +1,4 @@
-﻿// src/i18n/translations.js
-export const translations = {
+﻿export const translations = {
     fr: {
         // Mode toggle
         normal: "Normal",
@@ -9,9 +8,11 @@ export const translations = {
         validate: "Valider",
 
         // Daily info
-        dailyPuzzle: "Daily puzzle · Réinitialisation dans",
+        dailyPuzzle: "Jeu quotidien · Réinitialisation dans",
 
         // Result modal
+        result: "Résultat",
+        summary: "Résumé",
         won: "GAGNÉ !",
         lost: "PERDU",
         wonMessage: "Bravo ! Vous avez trouvé :",
@@ -63,6 +64,8 @@ export const translations = {
         hard: "Hard",
         validate: "Validate",
         dailyPuzzle: "Daily puzzle · Resets in",
+        result: "Result",
+        summary: "Summary",
         won: "WON!",
         lost: "LOST",
         wonMessage: "Well done! You found:",
@@ -106,6 +109,8 @@ export const translations = {
         hard: "Difícil",
         validate: "Validar",
         dailyPuzzle: "Puzzle diario · Reinicio en",
+        result: "Resultado",
+        summary: "Resumen",
         won: "¡GANASTE!",
         lost: "PERDISTE",
         wonMessage: "¡Bravo! Encontraste:",
@@ -149,6 +154,8 @@ export const translations = {
         hard: "Schwer",
         validate: "Bestätigen",
         dailyPuzzle: "Tägliches Rätsel · Zurücksetzen in",
+        result: "Ergebnis",
+        summary: "Zusammenfassung",
         won: "GEWONNEN!",
         lost: "VERLOREN",
         wonMessage: "Bravo! Du hast gefunden:",

@@ -1,5 +1,4 @@
-﻿// src/components/Shop.jsx
-import { useGame } from "../context/GameContext";
+﻿import { useGame } from "../context/GameContext";
 import { useTranslation } from "../hooks/useTranslation";
 
 const THEMES = {

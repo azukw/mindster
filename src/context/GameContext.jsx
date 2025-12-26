@@ -1,5 +1,4 @@
-﻿// src/context/GameContext.jsx
-import { createContext, useContext, useReducer, useEffect } from "react";
+﻿import { createContext, useContext, useReducer, useEffect } from "react";
 import { THEMES } from "../components/Shop";
 
 const GameContext = createContext();
@@ -75,7 +74,7 @@ const initialState = {
     settings: {
         darkMode: true,
         highContrast: false,
-        language: "fr",
+        language: "en",
     },
     stats: {
         normal: { played: 0, won: 0, streak: 0, maxStreak: 0 },
@@ -85,10 +84,12 @@ const initialState = {
         normal: "default",
         hard: "default",
     },
+    hasSeenHelp: false,
 };
 
+
 const loadState = () => {
-    const saved = localStorage.getItem("mastermind-state");
+    const saved = localStorage.getItem("mindster-state");
     if (saved) {
         const parsed = JSON.parse(saved);
         const today = new Date().toISOString().split("T")[0];
@@ -272,9 +273,14 @@ const gameReducer = (state, action) => {
             };
         }
 
+        case "MARK_HELP_SEEN":
+            return { ...state, hasSeenHelp: true };
+
 
         case "UPDATE_SETTINGS":
             return { ...state, settings: { ...state.settings, ...action.settings } };
+
+
         default:
             return state;
     }
@@ -284,7 +290,7 @@ export function GameProvider({ children }) {
     const [state, dispatch] = useReducer(gameReducer, null, loadState);
 
     useEffect(() => {
-        localStorage.setItem("mastermind-state", JSON.stringify(state));
+        localStorage.setItem("mindster-state", JSON.stringify(state));
     }, [state]);
 
     useEffect(() => {

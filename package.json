@@ -1,5 +1,5 @@
 {
-  "name": "mastermind",
+  "name": "mindster",
   "homepage": "https://azukw.github.io/mindster/",
   "private": true,
   "version": "0.0.0",
@@ -13,6 +13,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "gh-pages": "^6.3.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
