@@ -9,6 +9,8 @@ import Stats from "../components/Stats";
 import Help from "../components/Help";
 import Settings from "../components/Settings";
 import Shop from "../components/Shop";
+import VersusPage from "../pages/Versus";
+
 
 export default function Game() {
     const { state, dispatch, getTimeUntilReset } = useGame();
@@ -139,6 +141,10 @@ export default function Game() {
 
             </div>
 
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+                <button className="icon-btn" onClick={() => setOpenModal("versus")}>⚔️ Versus</button>
+            </div>
+
             <Board />
             <Palette />
 
@@ -250,6 +256,12 @@ export default function Game() {
             {openModal === "shop" && (
                 <Modal onClose={() => setOpenModal(null)}>
                     <Shop />
+                </Modal>
+            )}
+
+            {openModal === "versus" && (
+                <Modal onClose={() => setOpenModal(null)}>
+                    <VersusPage />
                 </Modal>
             )}
         </main>
