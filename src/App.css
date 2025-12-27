@@ -162,13 +162,17 @@ body.dark .dot-wrong {
 
 /* ========== COLORS ========== */
 .red { background: #e74c3c; }
-.blue { background: #3498db; }
+.blue { background: #3469db; }
 .yellow { background: #f1c40f; }
 .green { background: #2ecc71; }
 .purple { background: #9b59b6; }
 .orange { background: #e67e22; }
 .pink { background: #e91e63; }
-.cyan { background: #00bcd4; }
+.cyan { background: #73ccd7; }
+.lime { background: #32cd32; }
+.coral { background: #ff7f50; }
+.indigo { background: #4b0082; }
+.gold { background: #ffd700; }
 
 /* ========== PALETTE ========== */
 .palette {
@@ -219,6 +223,19 @@ body.dark .dot-wrong {
 .palette-hard .color {
     width: clamp(36px, 10vw, 48px);
     height: clamp(36px, 10vw, 48px);
+}
+
+/* Mode extrême : 2 lignes de 6 */
+.palette-extreme .palette-colors {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(4px, 1vw, 8px);
+    max-width: 320px;
+}
+
+.palette-extreme .color {
+    width: clamp(32px, 8vw, 40px);
+    height: clamp(32px, 8vw, 40px);
 }
 
 .backspace {
@@ -960,6 +977,63 @@ body.dark .game::after {
     }
 }
 
+/* ========== EXTREME MODE FIXES ========== */
+
+/* Board plus large pour le mode extrême */
+.board {
+    max-width: 100%;
+}
+
+/* Slots plus petits en mode extrême */
+.row .slots {
+    gap: clamp(2px, 0.8vw, 4px);
+}
+
+/* Solution display pour le mode extrême */
+.solution-display.solution-extreme {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    max-width: 100%;
+    justify-content: flex-start;
+}
+
+.solution-display.solution-extreme .solution-slot {
+    width: clamp(28px, 7vw, 36px);
+    height: clamp(28px, 7vw, 36px);
+}
+
+.solution-display.solution-hard .solution-slot {
+    width: clamp(32px, 8vw, 40px);
+    height: clamp(32px, 8vw, 40px);
+}
+
+/* Slots pour mode extrême */
+.slot.slot-extreme {
+    width: clamp(24px, 6vw, 32px);
+    height: clamp(24px, 6vw, 32px);
+}
+
+.slot.slot-hard {
+    width: clamp(28px, 7vw, 38px);
+    height: clamp(28px, 7vw, 38px);
+}
+
+.dot.dot-small {
+    width: clamp(6px, 1.5vw, 8px);
+    height: clamp(6px, 1.5vw, 8px);
+}
+
+/* Réduire la taille des slots en mode extrême */
+@media (max-width: 500px) {
+    .palette-extreme .palette-colors {
+        max-width: 280px;
+    }
+
+    .palette-extreme .color {
+        width: clamp(28px, 7vw, 36px);
+        height: clamp(28px, 7vw, 36px);
+    }
+}
 
 /* ========== HIGH CONTRAST ========== */
 body.high-contrast .slot {

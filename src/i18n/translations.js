@@ -60,6 +60,11 @@
         unlocked: "Débloqué !",
         cost: "{count} victoire",
         costPlural: "{count} victoires",
+
+        // Extreme mode
+        modeExtreme: "Mode Extrême",
+        extreme: "Extrême",
+        extremeDesc: "8 couleurs parmi 12",
     },
     en: {
         normal: "Normal",
@@ -107,6 +112,9 @@
         unlocked: "Unlocked!",
         cost: "{count} victory",
         costPlural: "{count} victories",
+        modeExtreme: "Extreme Mode",
+        extreme: "Extreme",
+        extremeDesc: "8 colors from 12",
     },
     es: {
         normal: "Normal",
@@ -154,6 +162,9 @@
         unlocked: "¡Desbloqueado!",
         cost: "{count} victoria",
         costPlural: "{count} victorias",
+        modeExtreme: "Modo Extremo",
+        extreme: "Extremo",
+        extremeDesc: "8 colores de 12",
     },
     de: {
         normal: "Normal",
@@ -201,5 +212,8 @@
         unlocked: "Freigeschaltet!",
         cost: "{count} Sieg",
         costPlural: "{count} Siege",
+        modeExtreme: "Extremer Modus",
+        extreme: "Extrem",
+        extremeDesc: "8 Farben aus 12",
     },
 };

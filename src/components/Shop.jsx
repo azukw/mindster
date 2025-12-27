@@ -4,27 +4,35 @@ import { useTranslation } from "../hooks/useTranslation";
 const THEMES = {
     normal: [
         { id: "default", name: "Classique", cost: 0 },
-        { id: "ocean", name: "Océan", cost: 3, colors: ["#0077b6", "#00b4d8", "#90e0ef", "#caf0f8", "#03045e", "#023e8a"] },
-        { id: "forest", name: "Forêt", cost: 5, colors: ["#2d6a4f", "#40916c", "#52b788", "#74c69d", "#95d5b2", "#b7e4c7"] },
-        { id: "sunset", name: "Coucher de soleil", cost: 10, colors: ["#ff6b6b", "#ee6c4d", "#f4a261", "#e9c46a", "#e76f51", "#d62828"] },
-        { id: "candy", name: "Bonbon", cost: 15, colors: ["#ff85a1", "#fbb1bd", "#a2d2ff", "#bde0fe", "#cdb4db", "#ffc8dd"] },
-        { id: "neon", name: "Néon", cost: 20, colors: ["#ff00ff", "#00ffff", "#ff0080", "#80ff00", "#8000ff", "#ffff00"] },
+        { id: "bubblegum", name: "Bubblegum", cost: 3, colors: ["#ffb3ba", "#ffdfba", "#ffffba", "#baffc9", "#bae1ff", "#d5baff"] },
+        { id: "retro", name: "Rétro", cost: 5, colors: ["#f67280", "#c06c84", "#6c5b7b", "#355c7d", "#99b898", "#f8b195"] },
+        { id: "citrus", name: "Agrumes", cost: 10, colors: ["#ffe156", "#ffb25b", "#ff6f59", "#254441", "#43aa8b", "#b2b09b"] },
+        { id: "icecream", name: "Glace", cost: 15, colors: ["#f7cac9", "#92a8d1", "#f7786b", "#b5ead7", "#ffdac1", "#e2f0cb"] },
+        { id: "matrix", name: "Matrix", cost: 20, colors: ["#0f0", "#222", "#393", "#0c0", "#060", "#333"] },
     ],
     hard: [
         { id: "default", name: "Classique", cost: 0 },
-        { id: "galaxy", name: "Galaxie", cost: 3, colors: ["#7400b8", "#6930c3", "#5e60ce", "#5390d9", "#4ea8de", "#48bfe3", "#56cfe1", "#64dfdf"] },
-        { id: "autumn", name: "Automne", cost: 5, colors: ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#e9d8a6", "#94d2bd", "#0a9396"] },
-        { id: "pastel", name: "Pastel", cost: 10, colors: ["#ffadad", "#ffd6a5", "#fdffb6", "#caffbf", "#9bf6ff", "#a0c4ff", "#bdb2ff", "#ffc6ff"] },
-        { id: "midnight", name: "Minuit", cost: 15, colors: ["#22223b", "#4a4e69", "#9a8c98", "#c9ada7", "#f2e9e4", "#023047", "#219ebc", "#8ecae6"] },
-        { id: "rainbow", name: "Arc-en-ciel", cost: 25, colors: ["#ff0000", "#ff8000", "#ffff00", "#00ff00", "#00ffff", "#0080ff", "#8000ff", "#ff0080"] },
+        { id: "sunrise", name: "Lever du soleil", cost: 3, colors: ["#ff9a8b", "#ff6a88", "#ff99ac", "#fad0c4", "#ffd6e0", "#fcb69f", "#ffe29f", "#f6e7d7"] },
+        { id: "aurora", name: "Aurore", cost: 5, colors: ["#00c3ff", "#ffff1c", "#ff61a6", "#a890fe", "#00ffb3", "#ffb347", "#ff6f91", "#6a89cc"] },
+        { id: "jungle", name: "Jungle", cost: 10, colors: ["#355c7d", "#6c5b7b", "#c06c84", "#99b898", "#2a9d8f", "#264653", "#e9c46a", "#f4a261"] },
+        { id: "pastelpop", name: "Pastel Pop", cost: 15, colors: ["#ffd6e0", "#f6e7d7", "#b5ead7", "#c7ceea", "#ffdac1", "#e2f0cb", "#f7cac9", "#92a8d1"] },
+        { id: "lava", name: "Lave", cost: 0, colors: ["#ff4500", "#ff6347", "#ffb347", "#ffd700", "#ff6f00", "#b22222", "#800000", "#a0522d"] },
+    ],
+    extreme: [
+        { id: "default", name: "Classique", cost: 0 },
+        { id: "cyberpunk", name: "Cyberpunk", cost: 5, colors: ["#ff00c8", "#00fff7", "#fffb00", "#ff0054", "#00ff85", "#ff7b00", "#2d00f7", "#8f00ff", "#ff1b6b", "#00bfae", "#ff61a6", "#1a1a2e"] },
+        { id: "pixel", name: "Pixel Art", cost: 10, colors: ["#29adff", "#83769c", "#ff77a8", "#ffccaa", "#ff0040", "#ffb300", "#fff700", "#00e436", "#1d2b53", "#7e2553", "#008751", "#ab5236"] },
+        { id: "royal", name: "Royal", cost: 15, colors: ["#ffd700", "#4169e1", "#800080", "#fffafa", "#b76e79", "#c0c0c0", "#003366", "#e5c100", "#a020f0", "#d4af37", "#1c1c1c", "#f5e6ca"] },
     ],
 };
+
 
 export default function Shop() {
     const { state, dispatch } = useGame();
     const { t } = useTranslation();
     const normalWins = state.stats.normal.won;
     const hardWins = state.stats.hard.won;
+    const extremeWins = state.stats.extreme.won;
 
     const isUnlocked = (mode, cost) => {
         const wins = mode === "normal" ? normalWins : hardWins;
@@ -85,6 +93,13 @@ export default function Shop() {
                 <h3>{t("modeHard")} <span className="wins-count">({hardWins} {t("victories")})</span></h3>
                 <div className="themes-grid">
                     {THEMES.hard.map((theme) => renderThemeCard("hard", theme))}
+                </div>
+            </div>
+
+            <div className="shop-section">
+                <h3>{t("modeExtreme")} <span className="wins-count">({extremeWins} {t("victories")})</span></h3>
+                <div className="themes-grid">
+                    {THEMES.extreme.map((theme) => renderThemeCard("extreme", theme))}
                 </div>
             </div>
         </div>

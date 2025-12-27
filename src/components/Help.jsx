@@ -47,6 +47,10 @@ export default function Help() {
                         <strong>{t("hard")}</strong>
                         <span>{t("hardDesc")}</span>
                     </div>
+                    <div className="mode-info">
+                        <strong>{t("extreme")}</strong>
+                        <span>{t("extremeDesc")}</span>
+                    </div>
                 </div>
             </div>
         </div>

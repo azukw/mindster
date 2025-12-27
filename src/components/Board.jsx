@@ -3,7 +3,7 @@ import Row from "./Row";
 
 export default function Board() {
     const { state } = useGame();
-    const codeLength = state.mode === "hard" ? 6 : 4;
+    const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : 4;
 
     return (
         <section className="board">

@@ -20,10 +20,11 @@ export default function Game() {
     const hasShownHelpRef = useRef(false);
 
     const isHard = state.mode === "hard";
+    const isExtreme = state.mode === "extreme";
     const isWon = state.gameStatus === "won";
     const isLost = state.gameStatus === "lost";
     const isGameOver = isWon || isLost;
-    const codeLength = state.mode === "hard" ? 6 : 4;
+    const codeLength = isExtreme ? 8 : isHard ? 6 : 4;
     const isComplete = state.currentAttempt.length === codeLength;
 
     const getColorStyle = (color) => {
@@ -32,7 +33,7 @@ export default function Game() {
             const parts = color.split("-");
             const tId = parts[1];
             const index = parseInt(parts[2]);
-            const themes = isHard ? THEMES.hard : THEMES.normal;
+            const themes = isExtreme ? THEMES.extreme : isHard ? THEMES.hard : THEMES.normal;
             const theme = themes.find(t => t.id === tId);
             return { background: theme?.colors?.[index] || "#ccc" };
         }
@@ -40,7 +41,7 @@ export default function Game() {
     };
 
     const handleShare = () => {
-        const modeText = isHard ? "🔥 Hard" : "Normal";
+        const modeText = isExtreme ? "💀 Extreme" : isHard ? "🔥 Hard" : "Normal";
         const date = new Date().toLocaleDateString();
 
         let result = `Mindster ${modeText} - ${date}\n\n`;
@@ -111,16 +112,22 @@ export default function Game() {
         <main className="game">
             <div className="mode-toggle">
                 <button
-                    className={!isHard ? "active" : ""}
+                    className={state.mode === "normal" ? "active" : ""}
                     onClick={() => dispatch({ type: "SET_MODE", mode: "normal" })}
                 >
                     {t("normal")}
                 </button>
                 <button
-                    className={isHard ? "active" : ""}
+                    className={state.mode === "hard" ? "active" : ""}
                     onClick={() => dispatch({ type: "SET_MODE", mode: "hard" })}
                 >
                     {t("hard")}
+                </button>
+                <button
+                    className={state.mode === "extreme" ? "active" : ""}
+                    onClick={() => dispatch({ type: "SET_MODE", mode: "extreme" })}
+                >
+                    {t("extreme")}
                 </button>
             </div>
 
@@ -163,12 +170,11 @@ export default function Game() {
                             {isWon ? t("wonMessage") : t("lostMessage")}
                         </p>
 
-                        {/* Solution en premier */}
-                        <div className="solution-display">
+                        <div className={`solution-display ${isExtreme ? "solution-extreme" : isHard ? "solution-hard" : ""}`}>
                             {state.secretCode.map((color, i) => (
                                 <div
                                     key={i}
-                                    className={`solution-slot ${color.startsWith("theme-") ? "" : color}`}
+                                    className={`solution-slot ${isExtreme ? "slot-extreme" : isHard ? "slot-hard" : ""} ${color.startsWith("theme-") ? "" : color}`}
                                     style={getColorStyle(color)}
                                 />
                             ))}
@@ -190,7 +196,7 @@ export default function Game() {
                                         <div className="summary-dots">
                                             {Array.from({ length: codeLength }).map((_, j) => {
                                                 const feedback = attempt.feedback;
-                                                let dotClass = "summary-dot ";
+                                                let dotClass = `summary-dot ${isExtreme ? "dot-small" : ""} `;
                                                 if (j < feedback.correct) {
                                                     dotClass += "dot-correct";
                                                 } else if (j < feedback.correct + feedback.misplaced) {

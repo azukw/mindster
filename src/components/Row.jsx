@@ -4,6 +4,7 @@ import { THEMES } from "./Shop";
 export default function Row({ colors = [], feedback, slots, inactive, isCurrent }) {
     const { state } = useGame();
     const isHard = state.mode === "hard";
+    const isExtreme = state.mode === "extreme";
     const themeId = state.selectedThemes?.[state.mode] || "default";
 
     const getColorStyle = (color) => {
@@ -12,7 +13,7 @@ export default function Row({ colors = [], feedback, slots, inactive, isCurrent 
             const parts = color.split("-");
             const tId = parts[1];
             const index = parseInt(parts[2]);
-            const themes = isHard ? THEMES.hard : THEMES.normal;
+            const themes = isExtreme ? THEMES.extreme : isHard ? THEMES.hard : THEMES.normal;
             const theme = themes.find(t => t.id === tId);
             return { background: theme?.colors?.[index] || "#ccc" };
         }
@@ -29,6 +30,8 @@ export default function Row({ colors = [], feedback, slots, inactive, isCurrent 
         for (let i = 0; i < slots; i++) feedbackDots.push("empty");
     }
 
+    const slotSize = isExtreme ? "slot-extreme" : isHard ? "slot-hard" : "";
+
     return (
         <div className={`row ${inactive ? "inactive" : ""} ${isCurrent ? "current" : ""}`}>
             <div className="slots">
@@ -38,7 +41,7 @@ export default function Row({ colors = [], feedback, slots, inactive, isCurrent 
                     return (
                         <div
                             key={i}
-                            className={`slot ${isThemeColor ? "" : color || ""}`}
+                            className={`slot ${slotSize} ${isThemeColor ? "" : color || ""}`}
                             style={getColorStyle(color)}
                         />
                     );
@@ -46,7 +49,7 @@ export default function Row({ colors = [], feedback, slots, inactive, isCurrent 
             </div>
             <div className="feedback" style={{ gridTemplateColumns: `repeat(${Math.ceil(slots / 2)}, 12px)` }}>
                 {feedbackDots.map((dot, i) => (
-                    <span key={i} className={`dot dot-${dot}`} />
+                    <span key={i} className={`dot ${isExtreme ? "dot-small" : ""} dot-${dot}`} />
                 ))}
             </div>
         </div>

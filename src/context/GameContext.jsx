@@ -5,22 +5,25 @@ const GameContext = createContext();
 
 const COLORS_NORMAL = ["red", "blue", "yellow", "green", "orange", "purple"];
 const COLORS_HARD = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan"];
+const COLORS_EXTREME = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan", "lime", "coral", "indigo", "gold"];
 
 const getThemeColors = (mode, themeId) => {
     if (!themeId || themeId === "default") {
+        if (mode === "extreme") return COLORS_EXTREME;
         return mode === "hard" ? COLORS_HARD : COLORS_NORMAL;
     }
-    const themes = mode === "hard" ? THEMES.hard : THEMES.normal;
+    const themes = mode === "extreme" ? THEMES.extreme : mode === "hard" ? THEMES.hard : THEMES.normal;
     const theme = themes.find(t => t.id === themeId);
     if (theme?.colors) {
         return theme.colors.map((_, i) => `theme-${themeId}-${i}`);
     }
+    if (mode === "extreme") return COLORS_EXTREME;
     return mode === "hard" ? COLORS_HARD : COLORS_NORMAL;
 };
 
 const getDailyCode = (mode, themeId) => {
     const colors = getThemeColors(mode, themeId);
-    const codeLength = mode === "hard" ? 6 : 4;
+    const codeLength = mode === "extreme" ? 8 : mode === "hard" ? 6 : 4;
     const today = new Date().toISOString().split("T")[0];
 
     let hash = 0;
@@ -65,6 +68,7 @@ const initialState = {
     savedGames: {
         normal: null,
         hard: null,
+        extreme: null,
     },
     attempts: [],
     currentAttempt: [],
@@ -79,10 +83,12 @@ const initialState = {
     stats: {
         normal: { played: 0, won: 0, streak: 0, maxStreak: 0 },
         hard: { played: 0, won: 0, streak: 0, maxStreak: 0 },
+        extreme: { played: 0, won: 0, streak: 0, maxStreak: 0 },
     },
     selectedThemes: {
         normal: "default",
         hard: "default",
+        extreme: "default",
     },
     hasSeenHelp: false,
 };
@@ -93,18 +99,42 @@ const loadState = () => {
     if (saved) {
         const parsed = JSON.parse(saved);
         const today = new Date().toISOString().split("T")[0];
+
+        // Fusionner les stats existantes avec les valeurs par défaut
+        const mergedStats = {
+            normal: { ...initialState.stats.normal, ...parsed.stats?.normal },
+            hard: { ...initialState.stats.hard, ...parsed.stats?.hard },
+            extreme: { ...initialState.stats.extreme, ...parsed.stats?.extreme },
+        };
+
+        // Fusionner les thèmes sélectionnés
+        const mergedThemes = {
+            ...initialState.selectedThemes,
+            ...parsed.selectedThemes,
+        };
+
+        // Fusionner les savedGames
+        const mergedSavedGames = {
+            ...initialState.savedGames,
+            ...parsed.savedGames,
+        };
+
         if (parsed.lastPlayed !== today) {
             return {
                 ...initialState,
-                settings: parsed.settings || initialState.settings,
-                stats: parsed.stats || initialState.stats,
-                selectedThemes: parsed.selectedThemes || initialState.selectedThemes,
+                settings: { ...initialState.settings, ...parsed.settings },
+                stats: mergedStats,
+                selectedThemes: mergedThemes,
+                hasSeenHelp: parsed.hasSeenHelp ?? false,
             };
         }
         return {
             ...initialState,
             ...parsed,
-            secretCode: getDailyCode(parsed.mode || "normal", parsed.selectedThemes?.[parsed.mode || "normal"] || "default"),
+            stats: mergedStats,
+            selectedThemes: mergedThemes,
+            savedGames: mergedSavedGames,
+            secretCode: getDailyCode(parsed.mode || "normal", mergedThemes[parsed.mode || "normal"] || "default"),
         };
     }
     return initialState;
@@ -139,14 +169,14 @@ const calculateFeedback = (attempt, secret) => {
 const gameReducer = (state, action) => {
     switch (action.type) {
         case "SELECT_COLOR": {
-            const codeLength = state.mode === "hard" ? 6 : 4;
+            const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : 4;
             if (state.currentAttempt.length >= codeLength) return state;
             return { ...state, currentAttempt: [...state.currentAttempt, action.color] };
         }
         case "REMOVE_LAST":
             return { ...state, currentAttempt: state.currentAttempt.slice(0, -1) };
         case "VALIDATE": {
-            const codeLength = state.mode === "hard" ? 6 : 4;
+            const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : 4;
             if (state.currentAttempt.length !== codeLength) return state;
 
             const feedback = calculateFeedback(state.currentAttempt, state.secretCode);
@@ -299,7 +329,7 @@ export function GameProvider({ children }) {
     }, [state.settings]);
 
     return (
-        <GameContext.Provider value={{ state, dispatch, getTimeUntilReset, COLORS_NORMAL, COLORS_HARD, getThemeColors }}>
+        <GameContext.Provider value={{ state, dispatch, getTimeUntilReset, COLORS_NORMAL, COLORS_HARD, COLORS_EXTREME, getThemeColors }}>
             {children}
         </GameContext.Provider>
     );
