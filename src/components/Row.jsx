@@ -1,11 +1,22 @@
 ﻿import { useGame } from "../context/GameContext";
 import { THEMES } from "./Shop";
+import { useEffect, useState } from "react";
+
 
 export default function Row({ colors = [], feedback, slots, inactive, isCurrent }) {
     const { state } = useGame();
     const isHard = state.mode === "hard";
     const isExtreme = state.mode === "extreme";
     const themeId = state.selectedThemes?.[state.mode] || "default";
+    const [revealed, setRevealed] = useState(false);
+
+    useEffect(() => {
+        if (feedback) {
+            setTimeout(() => setRevealed(true), 100);
+        } else {
+            setRevealed(false);
+        }
+    }, [feedback]);
 
     const getColorStyle = (color) => {
         if (!color) return {};
@@ -49,7 +60,13 @@ export default function Row({ colors = [], feedback, slots, inactive, isCurrent 
             </div>
             <div className="feedback" style={{ gridTemplateColumns: `repeat(${Math.ceil(slots / 2)}, 12px)` }}>
                 {feedbackDots.map((dot, i) => (
-                    <span key={i} className={`dot ${isExtreme ? "dot-small" : ""} dot-${dot}`} />
+                    <span
+                        key={i}
+                        className={`dot ${isExtreme ? "dot-small" : ""} dot-${dot} ${revealed ? "revealed" : ""}`}
+                        style={{
+                            animationDelay: revealed ? `${i * 120}ms` : "0ms"
+                        }}
+                    />
                 ))}
             </div>
         </div>
