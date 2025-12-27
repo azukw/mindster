@@ -1111,23 +1111,30 @@ body.high-contrast .slot {
     border-width: 3px;
 }
 
-body.high-contrast .dot-correct {
-    background: #85c0f9;
-    border-color: #85c0f9;
+body.high-contrast .dot-correct,
+body.high-contrast .dot.revealed.dot-correct,
+body.high-contrast .summary-dot.dot-correct {
+    background: #85c0f9 !important;
+    border-color: #85c0f9 !important;
 }
 
-body.high-contrast .dot-misplaced {
-    background: #f5793a;
-    border-color: #f5793a;
+body.high-contrast .dot-misplaced,
+body.high-contrast .dot.revealed.dot-misplaced,
+body.high-contrast .summary-dot.dot-misplaced {
+    background: #f5793a !important;
+    border-color: #f5793a !important;
 }
 
-body.high-contrast .dot-correct-example {
-    background: #85c0f9;
+body.high-contrast .dot-wrong,
+body.high-contrast .dot.revealed.dot-wrong,
+body.high-contrast .summary-dot.dot-wrong {
+    background: #3a3a3c !important;
+    border-color: #3a3a3c !important;
 }
 
-body.high-contrast .dot-misplaced-example {
-    background: #f5793a;
-}
+body.high-contrast .dot-correct-example { background: #85c0f9 !important; }
+body.high-contrast .dot-misplaced-example { background: #f5793a !important; }
+body.high-contrast .dot-wrong-example { background: #3a3a3c !important; }
 
 /* ========== MEDIA QUERIES ========== */
 
