@@ -1,7 +1,12 @@
-﻿import { useGame } from "../context/GameContext";
+﻿import useGame from "../context/GameContext";
 import { useTranslation } from "../hooks/useTranslation";
 
 const THEMES = {
+    easy: [
+        { id: "default", name: "Classique", cost: 0 },
+        { id: "pastel", name: "Pastel", cost: 2, colors: ["#ffd6e0", "#f6e7d7", "#b5ead7", "#c7ceea", "#ffdac1"] },
+        { id: "sunset", name: "Coucher", cost: 4, colors: ["#ff9a8b", "#ff6a88", "#ffb997", "#ffd194", "#f6e7d7"] },
+    ],
     normal: [
         { id: "default", name: "Classique", cost: 0 },
         { id: "bubblegum", name: "Bubblegum", cost: 3, colors: ["#ffb3ba", "#ffdfba", "#ffffba", "#baffc9", "#bae1ff", "#d5baff"] },
@@ -16,7 +21,7 @@ const THEMES = {
         { id: "aurora", name: "Aurore", cost: 5, colors: ["#00c3ff", "#ffff1c", "#ff61a6", "#a890fe", "#00ffb3", "#ffb347", "#ff6f91", "#6a89cc"] },
         { id: "jungle", name: "Jungle", cost: 10, colors: ["#355c7d", "#6c5b7b", "#c06c84", "#99b898", "#2a9d8f", "#264653", "#e9c46a", "#f4a261"] },
         { id: "pastelpop", name: "Pastel Pop", cost: 15, colors: ["#ffd6e0", "#f6e7d7", "#b5ead7", "#c7ceea", "#ffdac1", "#e2f0cb", "#f7cac9", "#92a8d1"] },
-        { id: "lava", name: "Lave", cost: 0, colors: ["#ff4500", "#ff6347", "#ffb347", "#ffd700", "#ff6f00", "#b22222", "#800000", "#a0522d"] },
+        { id: "lava", name: "Lave", cost: 20, colors: ["#ff4500", "#ff6347", "#ffb347", "#ffd700", "#ff6f00", "#b22222", "#800000", "#a0522d"] },
     ],
     extreme: [
         { id: "default", name: "Classique", cost: 0 },
@@ -30,12 +35,13 @@ const THEMES = {
 export default function Shop() {
     const { state, dispatch } = useGame();
     const { t } = useTranslation();
+    const easyWins = state.stats.easy.won;
     const normalWins = state.stats.normal.won;
     const hardWins = state.stats.hard.won;
     const extremeWins = state.stats.extreme.won;
 
     const isUnlocked = (mode, cost) => {
-        const wins = mode === "normal" ? normalWins : hardWins;
+        const wins = mode === "easy" ? easyWins : mode === "normal" ? normalWins : mode === "hard" ? hardWins : extremeWins;
         return wins >= cost;
     };
 
@@ -81,6 +87,13 @@ export default function Shop() {
     return (
         <div className="modal-content shop-modal">
             <h2>{t("shop")}</h2>
+
+            <div className="shop-section">
+                <h3>{t("modeEasy")} <span className="wins-count">({easyWins} {t("victories")})</span></h3>
+                <div className="themes-grid">
+                    {THEMES.easy.map((theme) => renderThemeCard("easy", theme))}
+                </div>
+            </div>
 
             <div className="shop-section">
                 <h3>{t("modeNormal")} <span className="wins-count">({normalWins} {t("victories")})</span></h3>

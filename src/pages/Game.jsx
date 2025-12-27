@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useCallback, useRef } from "react";
-import { useGame } from "../context/GameContext";
+import useGame from "../context/GameContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { THEMES } from "../components/Shop";
 import Board from "../components/Board";
@@ -19,12 +19,13 @@ export default function Game() {
     const [copied, setCopied] = useState(false);
     const hasShownHelpRef = useRef(false);
 
+    const isEasy = state.mode === "easy";
     const isHard = state.mode === "hard";
     const isExtreme = state.mode === "extreme";
     const isWon = state.gameStatus === "won";
     const isLost = state.gameStatus === "lost";
     const isGameOver = isWon || isLost;
-    const codeLength = isExtreme ? 8 : isHard ? 6 : 4;
+    const codeLength = isExtreme ? 8 : isHard ? 6 : isEasy ? 3 : 4;
     const isComplete = state.currentAttempt.length === codeLength;
 
     const getColorStyle = (color) => {
@@ -33,7 +34,7 @@ export default function Game() {
             const parts = color.split("-");
             const tId = parts[1];
             const index = parseInt(parts[2]);
-            const themes = isExtreme ? THEMES.extreme : isHard ? THEMES.hard : THEMES.normal;
+            const themes = isExtreme ? THEMES.extreme : isHard ? THEMES.hard : isEasy ? THEMES.easy : THEMES.normal;
             const theme = themes.find(t => t.id === tId);
             return { background: theme?.colors?.[index] || "#ccc" };
         }
@@ -41,7 +42,7 @@ export default function Game() {
     };
 
     const handleShare = () => {
-        const modeText = isExtreme ? "💀 Extreme" : isHard ? "🔥 Hard" : "Normal";
+        const modeText = isExtreme ? "💀 Extreme" : isHard ? "🔥 Hard" : isEasy ? "✨ Easy" : "🧠 Normal";
         const date = new Date().toLocaleDateString();
 
         let result = `Mindster ${modeText} - ${date}\n\n`;
@@ -112,23 +113,30 @@ export default function Game() {
         <main className="game">
             <div className="mode-toggle">
                 <button
-                    className={state.mode === "normal" ? "active" : ""}
+                    className={`easy ${state.mode === "easy" ? "active" : ""}`}
+                    onClick={() => dispatch({ type: "SET_MODE", mode: "easy" })}
+                >
+                    {t("easy")}
+                </button>
+                <button
+                    className={`normal ${state.mode === "normal" ? "active" : ""}`}
                     onClick={() => dispatch({ type: "SET_MODE", mode: "normal" })}
                 >
                     {t("normal")}
                 </button>
                 <button
-                    className={state.mode === "hard" ? "active" : ""}
+                    className={`hard ${state.mode === "hard" ? "active" : ""}`}
                     onClick={() => dispatch({ type: "SET_MODE", mode: "hard" })}
                 >
                     {t("hard")}
                 </button>
                 <button
-                    className={state.mode === "extreme" ? "active" : ""}
+                    className={`extreme ${state.mode === "extreme" ? "active" : ""}`}
                     onClick={() => dispatch({ type: "SET_MODE", mode: "extreme" })}
                 >
                     {t("extreme")}
                 </button>
+
             </div>
 
             <Board />

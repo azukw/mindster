@@ -1,4 +1,4 @@
-﻿import { useGame } from "../context/GameContext";
+﻿import useGame from "../context/GameContext";
 import { useTranslation } from "../hooks/useTranslation";
 
 const LANGUAGES = [
@@ -63,6 +63,20 @@ export default function Settings() {
 
             <div className="setting">
                 <div className="setting-info">
+                    <span className="setting-title">{t("sounds")}</span>
+                </div>
+                <label className="switch">
+                    <input
+                        type="checkbox"
+                        checked={state.settings.playSounds}
+                        onChange={() => toggle("playSounds")}
+                    />
+                    <span className="slider"></span>
+                </label>
+            </div>
+
+            <div className="setting">
+                <div className="setting-info">
                     <span className="setting-title">{t("highContrast")}</span>
                     <span className="setting-desc">{t("highContrastDesc")}</span>
                 </div>
@@ -75,6 +89,7 @@ export default function Settings() {
                     <span className="slider"></span>
                 </label>
             </div>
+
 
             <div className="settings-footer">
                 <span>Mindster - Sami</span>

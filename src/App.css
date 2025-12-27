@@ -59,10 +59,38 @@ body.dark .mode-toggle button {
     border-color: #3a3a3c;
 }
 
-.mode-toggle button.active {
-    background: #6aaa64;
+.mode-toggle button.easy.active {
+    background: #5ec4a6; /* couleur Easy */
+    border-color: #5ec4a6;
+    color: #fff;
+}
+.mode-toggle button.normal.active {
+    background: #6aaa64; /* couleur Normal */
     border-color: #6aaa64;
     color: #fff;
+}
+.mode-toggle button.hard.active {
+    background: #f39c12; /* couleur hard */
+    border-color: #f39c12;
+    color: #fff;
+}
+.mode-toggle button.extreme.active {
+    background: #c9372c; /* couleur extreme */
+    border-color: #c9372c;
+    color: #fff;
+}
+
+body.dark .mode-toggle button.easy.active {
+    background: #4aa38f;
+    border-color: #4aa38f;
+}
+body.dark .mode-toggle button.hard.active {
+    background: #d7870d;
+    border-color: #d7870d;
+}
+body.dark .mode-toggle button.extreme.active {
+    background: #b22b24;
+    border-color: #b22b24;
 }
 
 /* ========== BOARD ========== */
@@ -127,9 +155,13 @@ body.dark .slot {
     width: clamp(7px, 1.8vw, 10px);
     height: clamp(7px, 1.8vw, 10px);
     border-radius: 50%;
-    border: 2px solid #3a3a3c;
+    border: 2px solid #d3d6da;
     background: transparent;
-    transition: background 0.2s, border-color 0.2s;
+    opacity: 1;
+    transform: none;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: background 0.2s, border-color 0.2s, transform 0.24s;
 }
 
 body:not(.dark) .dot {
@@ -160,18 +192,42 @@ body.dark .dot-wrong {
     border-color: #3a3a3c;
 }
 
-@keyframes feedback-reveal {
-    from { opacity: 0; transform: scale(0.5);}
-    to { opacity: 1; transform: scale(1);}
+@keyframes feedback-rotate {
+    0% {
+        opacity: 0;
+        transform: perspective(400px) rotateY(-180deg) scale(0.6);
+    }
+    60% {
+        opacity: 1;
+        transform: perspective(400px) rotateY(20deg) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(400px) rotateY(0deg) scale(1);
+    }
 }
 
-.dot.revealed {
-    opacity: 1;
-    animation: feedback-reveal 0.3s cubic-bezier(0.4,0,0.2,1) forwards;
+.dot.revealed.dot-correct {
+    background: #6aaa64;
+    border-color: #6aaa64;
+    animation: feedback-rotate 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
-.dot {
-    opacity: 0.8;
-    /* l’animation va rendre le dot visible */
+
+.dot.revealed.dot-misplaced {
+    background: #c9372c;
+    border-color: #c9372c;
+    animation: feedback-rotate 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.dot.revealed.dot-wrong {
+    background: #787c7e;
+    border-color: #787c7e;
+    animation: feedback-rotate 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.dot.revealed.dot-small {
+    width: clamp(6px, 1.5vw, 8px);
+    height: clamp(6px, 1.5vw, 8px);
 }
 
 

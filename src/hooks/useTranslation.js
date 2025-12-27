@@ -1,4 +1,4 @@
-﻿import { useGame } from "../context/GameContext";
+﻿import useGame from "../context/GameContext";
 import { translations } from "../i18n/translations";
 
 export function useTranslation() {

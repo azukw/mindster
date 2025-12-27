@@ -1,9 +1,9 @@
-﻿import { useGame } from "../context/GameContext";
+﻿import useGame from "../context/GameContext";
 import Row from "./Row";
 
 export default function Board() {
     const { state } = useGame();
-    const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : 4;
+    const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : state.mode === "easy" ? 3 : 4;
 
     return (
         <section className="board">

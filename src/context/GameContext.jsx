@@ -3,6 +3,7 @@ import { THEMES } from "../components/Shop";
 
 const GameContext = createContext();
 
+const COLORS_EASY = ["red", "blue", "yellow", "green", "orange"];
 const COLORS_NORMAL = ["red", "blue", "yellow", "green", "orange", "purple"];
 const COLORS_HARD = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan"];
 const COLORS_EXTREME = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan", "lime", "coral", "indigo", "gold"];
@@ -10,20 +11,31 @@ const COLORS_EXTREME = ["red", "blue", "yellow", "green", "purple", "orange", "p
 const getThemeColors = (mode, themeId) => {
     if (!themeId || themeId === "default") {
         if (mode === "extreme") return COLORS_EXTREME;
-        return mode === "hard" ? COLORS_HARD : COLORS_NORMAL;
+        if (mode === "hard") return COLORS_HARD;
+        if (mode === "easy") return COLORS_EASY;
+        return COLORS_NORMAL;
     }
-    const themes = mode === "extreme" ? THEMES.extreme : mode === "hard" ? THEMES.hard : THEMES.normal;
+    const themes =
+        mode === "extreme"
+            ? THEMES.extreme
+            : mode === "hard"
+                ? THEMES.hard
+                : mode === "easy"
+                    ? THEMES.easy
+                    : THEMES.normal;
     const theme = themes.find(t => t.id === themeId);
     if (theme?.colors) {
         return theme.colors.map((_, i) => `theme-${themeId}-${i}`);
     }
     if (mode === "extreme") return COLORS_EXTREME;
-    return mode === "hard" ? COLORS_HARD : COLORS_NORMAL;
+    if (mode === "hard") return COLORS_HARD;
+    if (mode === "easy") return COLORS_EASY;
+    return COLORS_NORMAL;
 };
 
 const getDailyCode = (mode, themeId) => {
     const colors = getThemeColors(mode, themeId);
-    const codeLength = mode === "extreme" ? 8 : mode === "hard" ? 6 : 4;
+    const codeLength = mode === "extreme" ? 8 : mode === "hard" ? 6 : mode === "easy" ? 3 : 4;
     const today = new Date().toISOString().split("T")[0];
 
     let hash = 0;
@@ -66,6 +78,7 @@ const getTimeUntilReset = () => {
 const initialState = {
     mode: "normal",
     savedGames: {
+        easy: null,
         normal: null,
         hard: null,
         extreme: null,
@@ -79,13 +92,16 @@ const initialState = {
         darkMode: true,
         highContrast: false,
         language: "en",
+        playSounds: true,
     },
     stats: {
+        easy: { played: 0, won: 0, streak: 0, maxStreak: 0 },
         normal: { played: 0, won: 0, streak: 0, maxStreak: 0 },
         hard: { played: 0, won: 0, streak: 0, maxStreak: 0 },
         extreme: { played: 0, won: 0, streak: 0, maxStreak: 0 },
     },
     selectedThemes: {
+        easy: "default",
         normal: "default",
         hard: "default",
         extreme: "default",
@@ -93,27 +109,24 @@ const initialState = {
     hasSeenHelp: false,
 };
 
-
 const loadState = () => {
     const saved = localStorage.getItem("mindster-state");
     if (saved) {
         const parsed = JSON.parse(saved);
         const today = new Date().toISOString().split("T")[0];
 
-        // Fusionner les stats existantes avec les valeurs par défaut
         const mergedStats = {
+            easy: { ...initialState.stats.easy, ...parsed.stats?.easy },
             normal: { ...initialState.stats.normal, ...parsed.stats?.normal },
             hard: { ...initialState.stats.hard, ...parsed.stats?.hard },
             extreme: { ...initialState.stats.extreme, ...parsed.stats?.extreme },
         };
 
-        // Fusionner les thèmes sélectionnés
         const mergedThemes = {
             ...initialState.selectedThemes,
             ...parsed.selectedThemes,
         };
 
-        // Fusionner les savedGames
         const mergedSavedGames = {
             ...initialState.savedGames,
             ...parsed.savedGames,
@@ -169,14 +182,14 @@ const calculateFeedback = (attempt, secret) => {
 const gameReducer = (state, action) => {
     switch (action.type) {
         case "SELECT_COLOR": {
-            const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : 4;
+            const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : state.mode === "easy" ? 3 : 4;
             if (state.currentAttempt.length >= codeLength) return state;
             return { ...state, currentAttempt: [...state.currentAttempt, action.color] };
         }
         case "REMOVE_LAST":
             return { ...state, currentAttempt: state.currentAttempt.slice(0, -1) };
         case "VALIDATE": {
-            const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : 4;
+            const codeLength = state.mode === "extreme" ? 8 : state.mode === "hard" ? 6 : state.mode === "easy" ? 3 : 4;
             if (state.currentAttempt.length !== codeLength) return state;
 
             const feedback = calculateFeedback(state.currentAttempt, state.secretCode);
@@ -239,24 +252,21 @@ const gameReducer = (state, action) => {
                 [action.mode]: action.themeId,
             };
 
-            // Convertir les couleurs existantes vers le nouveau thème
             const oldThemeId = state.selectedThemes[action.mode];
             const newThemeId = action.themeId;
 
             const convertColor = (color) => {
                 if (!color) return color;
 
-                // Si c'est une couleur de thème, extraire l'index et recréer avec le nouveau thème
                 if (color.startsWith("theme-")) {
                     const parts = color.split("-");
                     const index = parseInt(parts[2]);
                     return newThemeId === "default"
-                        ? (action.mode === "hard" ? COLORS_HARD : COLORS_NORMAL)[index]
+                        ? (action.mode === "extreme" ? COLORS_EXTREME : action.mode === "hard" ? COLORS_HARD : action.mode === "easy" ? COLORS_EASY : COLORS_NORMAL)[index]
                         : `theme-${newThemeId}-${index}`;
                 }
 
-                // Si c'est une couleur par défaut, trouver son index et convertir
-                const defaultColors = action.mode === "hard" ? COLORS_HARD : COLORS_NORMAL;
+                const defaultColors = action.mode === "extreme" ? COLORS_EXTREME : action.mode === "hard" ? COLORS_HARD : action.mode === "easy" ? COLORS_EASY : COLORS_NORMAL;
                 const index = defaultColors.indexOf(color);
                 if (index !== -1 && newThemeId !== "default") {
                     return `theme-${newThemeId}-${index}`;
@@ -270,7 +280,6 @@ const gameReducer = (state, action) => {
                 colors: attempt.colors.map(convertColor),
             });
 
-            // Ne convertir que si on est sur le mode concerné
             const newAttempts = action.mode === state.mode
                 ? state.attempts.map(convertAttempt)
                 : state.attempts;
@@ -283,7 +292,6 @@ const gameReducer = (state, action) => {
                 ? state.secretCode.map(convertColor)
                 : state.secretCode;
 
-            // Mettre à jour aussi les parties sauvegardées
             const newSavedGames = { ...state.savedGames };
             if (newSavedGames[action.mode]) {
                 newSavedGames[action.mode] = {
@@ -329,10 +337,15 @@ export function GameProvider({ children }) {
     }, [state.settings]);
 
     return (
-        <GameContext.Provider value={{ state, dispatch, getTimeUntilReset, COLORS_NORMAL, COLORS_HARD, COLORS_EXTREME, getThemeColors }}>
+        <GameContext.Provider value={{
+            state, dispatch, getTimeUntilReset,
+            COLORS_EASY, COLORS_NORMAL, COLORS_HARD, COLORS_EXTREME, getThemeColors
+        }}>
             {children}
         </GameContext.Provider>
     );
 }
 
-export const useGame = () => useContext(GameContext);
+export default function useGame() {
+    return useContext(GameContext);
+}

@@ -40,6 +40,10 @@ export default function Help() {
                 <h3>{t("modes")}</h3>
                 <div className="help-modes">
                     <div className="mode-info">
+                        <strong>{t("easy")}</strong>
+                        <span>{t("easyDesc")}</span>
+                    </div>
+                    <div className="mode-info">
                         <strong>{t("normal")}</strong>
                         <span>{t("normalDesc")}</span>
                     </div>

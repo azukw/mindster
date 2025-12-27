@@ -1,4 +1,4 @@
-﻿import { useGame } from "../context/GameContext";
+﻿import useGame from "../context/GameContext";
 import { useTranslation } from "../hooks/useTranslation";
 
 export default function Stats() {
@@ -37,6 +37,7 @@ export default function Stats() {
     return (
         <div className="modal-content stats-modal">
             <h2>{t("statistics")}</h2>
+            {renderModeStats("easy", t("modeEasy"))}
             {renderModeStats("normal", t("modeNormal"))}
             {renderModeStats("hard", t("modeHard"))}
             {renderModeStats("extreme", t("modeExtreme"))}
