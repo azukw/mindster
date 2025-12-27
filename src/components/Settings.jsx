@@ -92,7 +92,7 @@ export default function Settings() {
 
 
             <div className="settings-footer">
-                <span>Mindster - Sami</span>
+                <span>Mindster - Sami - Versus Mode Soon</span>
             </div>
         </div>
     );

@@ -1063,7 +1063,6 @@ body.dark .game::after {
 /* Solution display pour le mode extrême */
 .solution-display.solution-extreme {
     flex-wrap: nowrap !important;
-    overflow-x: auto;
     max-width: 100%;
     justify-content: flex-start;
 }
@@ -1139,6 +1138,20 @@ body.high-contrast .dot-wrong-example { background: #3a3a3c !important; }
 /* ========== MEDIA QUERIES ========== */
 
 @media (max-height: 700px) {
+    .modal .solution-display.solution-extreme {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px 8px;
+    }
+
+    .modal .solution-display.solution-extreme .solution-slot {
+        flex: 0 0 auto;
+        margin: 2px;
+        width: clamp(28px, 8vw, 36px);
+        height: clamp(28px, 8vw, 36px);
+    }
+
     .slot {
         width: clamp(32px, 8vw, 42px);
         height: clamp(32px, 8vw, 42px);
