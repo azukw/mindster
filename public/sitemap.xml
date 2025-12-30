@@ -1,151 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://azukw.github.io/mindster/</loc>
+    <loc>https://mindster.fr/</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?modal=help</loc>
+    <loc>https://mindster.fr/?modal=help</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?modal=settings</loc>
+    <loc>https://mindster.fr/?modal=settings</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?modal=shop</loc>
+    <loc>https://mindster.fr/?modal=shop</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?modal=stats</loc>
+    <loc>https://mindster.fr/?modal=stats</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=easy</loc>
+    <loc>https://mindster.fr/?mode=easy</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=easy&amp;modal=help</loc>
+    <loc>https://mindster.fr/?mode=easy&amp;modal=help</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=easy&amp;modal=settings</loc>
+    <loc>https://mindster.fr/?mode=easy&amp;modal=settings</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=easy&amp;modal=shop</loc>
+    <loc>https://mindster.fr/?mode=easy&amp;modal=shop</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=easy&amp;modal=stats</loc>
+    <loc>https://mindster.fr/?mode=easy&amp;modal=stats</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=normal</loc>
+    <loc>https://mindster.fr/?mode=normal</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=normal&amp;modal=help</loc>
+    <loc>https://mindster.fr/?mode=normal&amp;modal=help</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=normal&amp;modal=settings</loc>
+    <loc>https://mindster.fr/?mode=normal&amp;modal=settings</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=normal&amp;modal=shop</loc>
+    <loc>https://mindster.fr/?mode=normal&amp;modal=shop</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=normal&amp;modal=stats</loc>
+    <loc>https://mindster.fr/?mode=normal&amp;modal=stats</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=hard</loc>
+    <loc>https://mindster.fr/?mode=hard</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=hard&amp;modal=help</loc>
+    <loc>https://mindster.fr/?mode=hard&amp;modal=help</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=hard&amp;modal=settings</loc>
+    <loc>https://mindster.fr/?mode=hard&amp;modal=settings</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=hard&amp;modal=shop</loc>
+    <loc>https://mindster.fr/?mode=hard&amp;modal=shop</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=hard&amp;modal=stats</loc>
+    <loc>https://mindster.fr/?mode=hard&amp;modal=stats</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=extreme</loc>
+    <loc>https://mindster.fr/?mode=extreme</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=extreme&amp;modal=help</loc>
+    <loc>https://mindster.fr/?mode=extreme&amp;modal=help</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=extreme&amp;modal=settings</loc>
+    <loc>https://mindster.fr/?mode=extreme&amp;modal=settings</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=extreme&amp;modal=shop</loc>
+    <loc>https://mindster.fr/?mode=extreme&amp;modal=shop</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://azukw.github.io/mindster/?mode=extreme&amp;modal=stats</loc>
+    <loc>https://mindster.fr/?mode=extreme&amp;modal=stats</loc>
     <lastmod>2025-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>

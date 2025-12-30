@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://azukw.github.io/mindster/sitemap.xml
