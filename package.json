@@ -7,6 +7,7 @@
   "author": "Sami Saoud",
   "description": "Mindster",
   "scripts": {
+    "generate-sitemap": "node scripts/generate-sitemap.cjs",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

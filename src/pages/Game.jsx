@@ -15,7 +15,6 @@ export default function Game() {
     const { t } = useTranslation();
     const [countdown, setCountdown] = useState("");
     const [showResultModal, setShowResultModal] = useState(false);
-    const [openModal, setOpenModal] = useState(null);
     const [copied, setCopied] = useState(false);
     const hasShownHelpRef = useRef(false);
 
@@ -90,10 +89,9 @@ export default function Game() {
     useEffect(() => {
         if (!state.hasSeenHelp && !hasShownHelpRef.current) {
             hasShownHelpRef.current = true;
-            const timer = setTimeout(() => setOpenModal("help"), 0);
-            return () => clearTimeout(timer);
+            dispatch({ type: "OPEN_MODAL", modal: "help" });
         }
-    }, [state.hasSeenHelp]);
+    }, [state.hasSeenHelp, dispatch]);
 
     useEffect(() => {
         if (isGameOver) {
@@ -103,7 +101,7 @@ export default function Game() {
     }, [isGameOver]);
 
     const closeHelpModal = useCallback(() => {
-        setOpenModal(null);
+        dispatch({ type: "CLOSE_MODAL" });
         if (!state.hasSeenHelp) {
             dispatch({ type: "MARK_HELP_SEEN" });
         }
@@ -136,7 +134,6 @@ export default function Game() {
                 >
                     {t("extreme")}
                 </button>
-
             </div>
 
             <Board />
@@ -144,8 +141,8 @@ export default function Game() {
 
             <div className="bottom-bar">
                 <div className="bottom-left">
-                    <button className="icon-btn" onClick={() => setOpenModal("help")}>❓</button>
-                    <button className="icon-btn" onClick={() => setOpenModal("stats")}>📊</button>
+                    <button className="icon-btn" onClick={() => dispatch({ type: "OPEN_MODAL", modal: "help" })}>❓</button>
+                    <button className="icon-btn" onClick={() => dispatch({ type: "OPEN_MODAL", modal: "stats" })}>📊</button>
                 </div>
 
                 <button
@@ -163,8 +160,8 @@ export default function Game() {
                 </button>
 
                 <div className="bottom-right">
-                    <button className="icon-btn" onClick={() => setOpenModal("shop")}>🎨</button>
-                    <button className="icon-btn" onClick={() => setOpenModal("settings")}>⚙️</button>
+                    <button className="icon-btn" onClick={() => dispatch({ type: "OPEN_MODAL", modal: "shop" })}>🎨</button>
+                    <button className="icon-btn" onClick={() => dispatch({ type: "OPEN_MODAL", modal: "settings" })}>⚙️</button>
                 </div>
             </div>
 
@@ -229,26 +226,26 @@ export default function Game() {
                 </Modal>
             )}
 
-            {openModal === "help" && (
+            {state.activeModal === "help" && (
                 <Modal onClose={closeHelpModal}>
                     <Help />
                 </Modal>
             )}
 
-            {openModal === "stats" && (
-                <Modal onClose={() => setOpenModal(null)}>
+            {state.activeModal === "stats" && (
+                <Modal onClose={() => dispatch({ type: "CLOSE_MODAL" })}>
                     <Stats />
                 </Modal>
             )}
 
-            {openModal === "settings" && (
-                <Modal onClose={() => setOpenModal(null)}>
+            {state.activeModal === "settings" && (
+                <Modal onClose={() => dispatch({ type: "CLOSE_MODAL" })}>
                     <Settings />
                 </Modal>
             )}
 
-            {openModal === "shop" && (
-                <Modal onClose={() => setOpenModal(null)}>
+            {state.activeModal === "shop" && (
+                <Modal onClose={() => dispatch({ type: "CLOSE_MODAL" })}>
                     <Shop />
                 </Modal>
             )}

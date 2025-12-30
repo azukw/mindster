@@ -1,4 +1,5 @@
-﻿import { createContext, useContext, useReducer, useEffect } from "react";
+﻿/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useReducer, useEffect } from "react";
 import { THEMES } from "../components/Shop";
 
 const GameContext = createContext();
@@ -77,6 +78,7 @@ const getTimeUntilReset = () => {
 
 const initialState = {
     mode: "normal",
+    activeModal: null,
     savedGames: {
         easy: null,
         normal: null,
@@ -109,8 +111,22 @@ const initialState = {
     hasSeenHelp: false,
 };
 
+const allowedModals = ["help", "settings", "shop", "stats"];
+
 const loadState = () => {
     const saved = localStorage.getItem("mindster-state");
+
+    let urlMode = null;
+    let urlModal = null;
+    if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        const m = params.get("mode");
+        const modal = params.get("modal");
+        const allowed = ["easy", "normal", "hard", "extreme"];
+        if (m && allowed.includes(m)) urlMode = m;
+        if (modal && allowedModals.includes(modal)) urlModal = modal;
+    }
+
     if (saved) {
         const parsed = JSON.parse(saved);
         const today = new Date().toISOString().split("T")[0];
@@ -132,9 +148,15 @@ const loadState = () => {
             ...parsed.savedGames,
         };
 
+        const chosenMode = urlMode || parsed.mode || initialState.mode;
+        const chosenModal = urlModal || parsed.activeModal || null;
+
         if (parsed.lastPlayed !== today) {
             return {
                 ...initialState,
+                mode: chosenMode,
+                activeModal: chosenModal,
+                secretCode: getDailyCode(chosenMode, mergedThemes[chosenMode] || "default"),
                 settings: { ...initialState.settings, ...parsed.settings },
                 stats: mergedStats,
                 selectedThemes: mergedThemes,
@@ -144,12 +166,24 @@ const loadState = () => {
         return {
             ...initialState,
             ...parsed,
+            mode: chosenMode,
+            activeModal: chosenModal,
             stats: mergedStats,
             selectedThemes: mergedThemes,
             savedGames: mergedSavedGames,
-            secretCode: getDailyCode(parsed.mode || "normal", mergedThemes[parsed.mode || "normal"] || "default"),
+            secretCode: getDailyCode(chosenMode, mergedThemes[chosenMode] || "default"),
         };
     }
+
+    if (urlMode || urlModal) {
+        return {
+            ...initialState,
+            mode: urlMode || initialState.mode,
+            activeModal: urlModal || null,
+            secretCode: getDailyCode(urlMode || initialState.mode, initialState.selectedThemes[urlMode || initialState.mode] || "default"),
+        };
+    }
+
     return initialState;
 };
 
@@ -252,7 +286,6 @@ const gameReducer = (state, action) => {
                 [action.mode]: action.themeId,
             };
 
-            const oldThemeId = state.selectedThemes[action.mode];
             const newThemeId = action.themeId;
 
             const convertColor = (color) => {
@@ -314,10 +347,15 @@ const gameReducer = (state, action) => {
         case "MARK_HELP_SEEN":
             return { ...state, hasSeenHelp: true };
 
+        case "OPEN_MODAL":
+            if (!allowedModals.includes(action.modal)) return state;
+            return { ...state, activeModal: action.modal };
+
+        case "CLOSE_MODAL":
+            return { ...state, activeModal: null };
 
         case "UPDATE_SETTINGS":
             return { ...state, settings: { ...state.settings, ...action.settings } };
-
 
         default:
             return state;
@@ -335,6 +373,46 @@ export function GameProvider({ children }) {
         document.body.classList.toggle("dark", state.settings.darkMode);
         document.body.classList.toggle("high-contrast", state.settings.highContrast);
     }, [state.settings]);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const params = new URLSearchParams(window.location.search);
+
+        params.set("mode", state.mode);
+
+        if (state.activeModal) {
+            params.set("modal", state.activeModal);
+        } else {
+            params.delete("modal");
+        }
+
+        const newSearch = params.toString();
+        const newUrl = window.location.pathname + (newSearch ? "?" + newSearch : "");
+        window.history.replaceState({}, "", newUrl);
+    }, [state.mode, state.activeModal]);
+
+    // Listen popstate to restore mode/modal on back/forward
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const allowed = ["easy", "normal", "hard", "extreme"];
+        const onPop = () => {
+            const params = new URLSearchParams(window.location.search);
+            const modal = params.get("modal");
+            const mode = params.get("mode");
+
+            if (mode && allowed.includes(mode)) {
+                dispatch({ type: "SET_MODE", mode });
+            }
+
+            if (modal && allowedModals.includes(modal)) {
+                dispatch({ type: "OPEN_MODAL", modal });
+            } else {
+                dispatch({ type: "CLOSE_MODAL" });
+            }
+        };
+        window.addEventListener("popstate", onPop);
+        return () => window.removeEventListener("popstate", onPop);
+    }, []);
 
     return (
         <GameContext.Provider value={{
