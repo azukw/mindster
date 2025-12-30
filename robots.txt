@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://azukw.github.io/mindster/sitemap.xml
+Sitemap: https://mindster.fr/sitemap.xml
