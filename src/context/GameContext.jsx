@@ -70,10 +70,13 @@ const getDailyCode = (mode, themeId) => {
 
 const getTimeUntilReset = () => {
     const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
-    return tomorrow - now;
+    const nextUtcMidnight = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate() + 1,
+        0, 0, 0
+    ));
+    return nextUtcMidnight.getTime() - now.getTime();
 };
 
 const initialState = {
