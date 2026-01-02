@@ -232,7 +232,7 @@ body.dark .dot-wrong {
 
 
 /* ========== COLORS ========== */
-.red { background: #e74c3c; }
+.red { background: #cc0505; }
 .blue { background: #3469db; }
 .yellow { background: #f1c40f; }
 .green { background: #2ecc71; }
@@ -243,7 +243,7 @@ body.dark .dot-wrong {
 .lime { background: #32cd32; }
 .coral { background: #ff7f50; }
 .indigo { background: #4b0082; }
-.gold { background: #ffd700; }
+.brown { background: #8c5c5c; }
 
 /* ========== PALETTE ========== */
 .palette {

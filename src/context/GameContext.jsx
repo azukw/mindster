@@ -7,7 +7,7 @@ const GameContext = createContext();
 const COLORS_EASY = ["red", "blue", "yellow", "green", "orange"];
 const COLORS_NORMAL = ["red", "blue", "yellow", "green", "orange", "purple"];
 const COLORS_HARD = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan"];
-const COLORS_EXTREME = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan", "lime", "coral", "indigo", "gold"];
+const COLORS_EXTREME = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan", "lime", "coral", "indigo", "brown"];
 
 const getThemeColors = (mode, themeId) => {
     if (!themeId || themeId === "default") {

@@ -5,7 +5,8 @@ const THEMES = {
     easy: [
         { id: "default", name: "Classique", cost: 0 },
         { id: "pastel", name: "Pastel", cost: 2, colors: ["#ffd6e0", "#f6e7d7", "#b5ead7", "#c7ceea", "#ffdac1"] },
-        { id: "sunset", name: "Coucher", cost: 4, colors: ["#ff9a8b", "#ff6a88", "#ffb997", "#ffd194", "#f6e7d7"] },
+        { id: "sunset", name: "Coucher", cost: 4, colors: ["#e1da8c", "#ff6a88", "#b6dec8", "#c4ff94", "#f6e7d7"] },
+        { id : "douceur", name: "Douceur", cost: 5, colors: ["#dc8bd2", "#b36ec9", "#7e5ba9", "#f8c5ff", "#FA3EAFFF"] },
     ],
     normal: [
         { id: "default", name: "Classique", cost: 0 },
