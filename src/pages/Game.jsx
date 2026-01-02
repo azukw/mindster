@@ -61,7 +61,7 @@ export default function Game() {
         });
 
         result += `\n${isWon ? `✅ ${state.attempts.length}/${state.maxAttempts}` : "❌"}\n`;
-        result += "https://azukw.github.io/mindster/";
+        result += "https://mindster.fr/";
 
         navigator.clipboard.writeText(result).then(() => {
             setCopied(true);
