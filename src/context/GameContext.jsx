@@ -9,6 +9,7 @@ const COLORS_NORMAL = ["red", "blue", "yellow", "green", "orange", "purple"];
 const COLORS_HARD = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan"];
 const COLORS_EXTREME = ["red", "blue", "yellow", "green", "purple", "orange", "pink", "cyan", "lime", "coral", "indigo", "brown"];
 
+
 const getThemeColors = (mode, themeId) => {
     if (!themeId || themeId === "default") {
         if (mode === "extreme") return COLORS_EXTREME;

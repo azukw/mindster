@@ -2,6 +2,7 @@
 import { useTranslation } from "../hooks/useTranslation";
 
 const THEMES = {
+
     easy: [
         { id: "default", name: "Classique", cost: 0 },
         { id: "pastel", name: "Pastel", cost: 2, colors: ["#ffd6e0", "#f6e7d7", "#b5ead7", "#c7ceea", "#ffdac1"] },
